@@ -3,6 +3,10 @@ package org.nn4j;
 import org.nd4j.linalg.api.ndarray.INDArray;
 
 public abstract class Module {
-    ModuleCache cache = new ModuleCache();
-    abstract INDArray forward(INDArray in);
+    private ModuleCache cache = new ModuleCache();
+    protected abstract INDArray forward(INDArray in);
+
+    public void registerParam(String key, INDArray param) {
+        cache.registerParams(key, param);
+    }
 }
