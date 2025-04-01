@@ -1,12 +1,14 @@
 package org.nn4j;
 
-import org.nd4j.linalg.api.ndarray.INDArray;
+
+import org.tensorflow.Operand;
+import org.tensorflow.types.TFloat64;
 
 public abstract class Module {
-    private ModuleCache cache = new ModuleCache();
-    protected abstract INDArray forward(INDArray in);
+    private final ModuleCache cache = ModuleCacheFactory.getCache();
+    protected abstract Operand<TFloat64> forward(Operand<TFloat64> in);
 
-    public void registerParam(String key, INDArray param) {
-        cache.registerParams(key, param);
+    public Module() {
+        cache.registerModule(this);
     }
 }

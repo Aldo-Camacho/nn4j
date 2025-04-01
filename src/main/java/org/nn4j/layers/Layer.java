@@ -1,9 +1,11 @@
 package org.nn4j.layers;
 
-import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nn4j.ModuleCache;
+import org.tensorflow.Operand;
+import org.tensorflow.Tensor;
+import org.tensorflow.ndarray.NdArray;
+import org.tensorflow.types.TFloat64;
 
 @FunctionalInterface
 public interface Layer {
-    INDArray apply(INDArray in);
+    Operand<TFloat64> apply(Operand<TFloat64> in);
 }

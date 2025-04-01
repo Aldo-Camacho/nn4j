@@ -1,26 +1,27 @@
 package org.nn4j.layers;
 
-import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.linalg.factory.Nd4j;
-import org.nn4j.ModuleCache;
-import org.nn4j.ModuleCacheFactory;
+import org.tensorflow.Operand;
+import org.tensorflow.types.TFloat64;
+
+import java.util.Random;
 
 public class Linear extends AbstractLayer {
     int[] dims = new int[2];
-    INDArray weight;
-    INDArray bias;
+    Operand<TFloat64> weight;
+    Operand<TFloat64> bias;
 
     public Linear(int inFeatures, int outFeatures) {
         super();
         dims[0] = inFeatures;
         dims[1] = outFeatures;
-        weight = Nd4j.rand(outFeatures, inFeatures);
-        bias = Nd4j.zeros(outFeatures);
+
+        weight = tf.random.randomUniform(tf.constant(new int[] { outFeatures, inFeatures }), TFloat64.class);
+        bias = tf.zeros(tf.constant((new int[] {outFeatures})), TFloat64.class);
     }
 
     @Override
-    public INDArray apply(INDArray in) {
-        INDArray res = Nd4j.matmul(weight, in).add(bias);
+    public Operand<TFloat64> apply(Operand<TFloat64> in) {
+        Operand<TFloat64> res = tf.math.add(tf.linalg.matMul(weight, in), bias);
         register(res);
         return res;
     }
